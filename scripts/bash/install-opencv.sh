@@ -71,21 +71,31 @@ unzip ${OPENCV_VERSION}.zip && rm ${OPENCV_VERSION}.zip
 mv opencv-${OPENCV_VERSION} OpenCV
 cd OpenCV && mkdir build && cd build
 
-cmake -D WITH_CUDA=ON \
-    -D ENABLE_FAST_MATH=1 \
-    -D CUDA_FAST_MATH=1 \
-    -D WITH_CUBLAS=1 \
-    -DWITH_QT=ON \
-    -DWITH_OPENGL=ON \
-    -DFORCE_VTK=ON \
-    -DWITH_TBB=ON \
-    -DWITH_GDAL=ON \
-    -DWITH_XINE=ON \
-    -DBUILD_EXAMPLES=ON \
-    -D WITH_OPENCL=ON \
-    -D WITH_NVCUVID=ON \ 
-    -D WITH_GDAL=ON .. \ 
-    
+echo "Setting CUDA Paths"
+export LD_LIBRARY_PATH=/usr/local/cuda/lib
+export PATH=$PATH:/usr/local/cuda/bin
+echo "Configure OpenCV Build"
+
+cmake -D CMAKE_INSTALL_PREFIX=/usr/local -D WITH_NVCUVID=ON -D FORCE_VTK=ON -D WITH_XINE=ON -D WITH_CUDA=ON -D WITH_OPENGL=ON -D WITH_TBB=ON -D WITH_OPENCL=ON -D CMAKE_BUILD_TYPE=RELEASE -D CUDA_NVCC_FLAGS="-D_FORCE_INLINES --expt-relaxed-constexpr" -D WITH_GDAL=ON -D OPENCV_EXTRA_MODULES_PATH=../../opencv_contrib/modules/ -D ENABLE_FAST_MATH=1 -D CUDA_FAST_MATH=1 -D WITH_CUBLAS=1 -D CXXFLAGS="-std=c++11" -DCMAKE_CXX_COMPILER=g++-6 -DCMAKE_C_COMPILER=gcc-6 ..
+
+
+###########################################
+#cmake -D WITH_CUDA=ON \
+#    -D ENABLE_FAST_MATH=1 \
+#    -D CUDA_FAST_MATH=1 \
+#     -D WITH_CUBLAS=1 \
+#     -DWITH_QT=ON \
+#     -DWITH_OPENGL=ON \
+#     -DFORCE_VTK=ON \
+#     -DWITH_TBB=ON \
+#     -DWITH_GDAL=ON \
+#     -DWITH_XINE=ON \
+#     -DBUILD_EXAMPLES=ON \
+#     -D WITH_OPENCL=ON \
+#     -D WITH_NVCUVID=ON \ 
+#     -D WITH_GDAL=ON .. \ 
+############################################
+
 echo "Start OpenCV Build"
 make -j "$(nproc)"
 echo "Install OpenCV Build"
