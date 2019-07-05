@@ -57,7 +57,13 @@ apt-get install -y ant default-jdk
 apt-get install -y doxygen
 
 
-# 3. INSTALL THE LIBRARY
+# 3. INSTALL THE LIBRARY and OPENCV_CONTRIB
+echo "Downloading OpenCV Modules..."
+git clone https://github.com/opencv/opencv_contrib.git
+cd opencv_contrib
+git checkout 4.1.0
+cd ..
+
 
 apt-get install -y unzip wget
 wget https://github.com/opencv/opencv/archive/${OPENCV_VERSION}.zip
@@ -78,7 +84,7 @@ cmake -D WITH_CUDA=ON \
     -DBUILD_EXAMPLES=ON \
     -D WITH_OPENCL=ON \
     -D WITH_NVCUVID=ON \ 
-    -D WITH_GDAL=ON ..  
+    -D WITH_GDAL=ON .. \ 
     
 echo "Start OpenCV Build"
 make -j "$(nproc)"
