@@ -30,7 +30,7 @@ apt-get -y update
 # 2. INSTALL THE DEPENDENCIES
 
 # Build tools:
-apt-get install -y build-essential cmake
+apt-get install -y build-essential cmake git
 
 # GUI (if you want GTK, change 'qt5-default' to 'libgtkglext1-dev' and remove '-DWITH_QT=ON'):
 apt-get install -y qt5-default libvtk6-dev
@@ -54,7 +54,7 @@ apt-get install -y python-dev python-tk python-numpy python3-dev python3-tk pyth
 apt-get install -y ant default-jdk
 
 # Documentation:
-apt-get install -y doxygen
+apt-get install -y doxygen 
 
 
 # 3. INSTALL THE LIBRARY and OPENCV_CONTRIB
