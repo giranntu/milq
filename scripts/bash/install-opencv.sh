@@ -12,6 +12,12 @@
 # | Ubuntu 18.04 LTS | OpenCV 3.4.2 | OK   | 18 Jul 2018 |
 # | Debian 9.5       | OpenCV 3.4.2 | OK   | 18 Jul 2018 |
 
+echo "Setting CUDA Paths"
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda/lib
+export PATH=$PATH:/usr/local/cuda/bin:/usr/bin/
+echo "Configure OpenCV Build"
+
+
 
 # SCRIPT OPTIONS
 
@@ -72,10 +78,6 @@ unzip ${OPENCV_VERSION}.zip && rm ${OPENCV_VERSION}.zip
 mv opencv-${OPENCV_VERSION} OpenCV
 cd OpenCV && mkdir build && cd build
 
-echo "Setting CUDA Paths"
-export LD_LIBRARY_PATH=/usr/local/cuda/lib
-export PATH=$PATH:/usr/local/cuda/bin
-echo "Configure OpenCV Build"
 
 cmake -D CMAKE_INSTALL_PREFIX=/usr/local -D WITH_NVCUVID=ON -D FORCE_VTK=ON -D OPENCV_EXTRA_MODULES_PATH=../../opencv_contrib/modules/ -D WITH_XINE=ON -D WITH_CUDA=ON -D WITH_OPENGL=ON -D WITH_TBB=ON -D WITH_OPENCL=ON -D CMAKE_BUILD_TYPE=RELEASE -D CUDA_NVCC_FLAGS="-D_FORCE_INLINES --expt-relaxed-constexpr" -D WITH_GDAL=ON -D ENABLE_FAST_MATH=1 -D CUDA_FAST_MATH=1 -D WITH_CUBLAS=1 -D CXXFLAGS="-std=c++11" -DCMAKE_CXX_COMPILER=g++-6 -DCMAKE_C_COMPILER=gcc-6 ..
 #
