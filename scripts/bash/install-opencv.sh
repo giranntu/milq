@@ -53,16 +53,17 @@ apt-get install -y python-dev python-tk python-numpy python3-dev python3-tk pyth
 # Java:
 apt-get install -y ant default-jdk
 
-# Documentation:
-apt-get install -y doxygen 
+# Documentation:   AND REMOVE ALL APT LISTS TO SAVE STORAGE
+apt-get install -y doxygen && \
+ rm -rf /var/lib/apt/lists/*
 
 
 # 3. INSTALL THE LIBRARY and OPENCV_CONTRIB
-echo "Downloading OpenCV Modules..."
-git clone https://github.com/opencv/opencv_contrib.git
-cd opencv_contrib
-git checkout 4.1.0
-cd ..
+# echo "Downloading OpenCV Modules..."
+# git clone https://github.com/opencv/opencv_contrib.git
+# cd opencv_contrib
+# git checkout 4.1.0
+# cd ..
 
 
 apt-get install -y unzip wget
@@ -76,8 +77,8 @@ export LD_LIBRARY_PATH=/usr/local/cuda/lib
 export PATH=$PATH:/usr/local/cuda/bin
 echo "Configure OpenCV Build"
 
-cmake -D CMAKE_INSTALL_PREFIX=/usr/local -D WITH_NVCUVID=ON -D FORCE_VTK=ON -D WITH_XINE=ON -D WITH_CUDA=ON -D WITH_OPENGL=ON -D WITH_TBB=ON -D WITH_OPENCL=ON -D CMAKE_BUILD_TYPE=RELEASE -D CUDA_NVCC_FLAGS="-D_FORCE_INLINES --expt-relaxed-constexpr" -D WITH_GDAL=ON -D OPENCV_EXTRA_MODULES_PATH=../../opencv_contrib/modules/ -D ENABLE_FAST_MATH=1 -D CUDA_FAST_MATH=1 -D WITH_CUBLAS=1 -D CXXFLAGS="-std=c++11" -DCMAKE_CXX_COMPILER=g++-6 -DCMAKE_C_COMPILER=gcc-6 ..
-
+cmake -D CMAKE_INSTALL_PREFIX=/usr/local -D WITH_NVCUVID=ON -D FORCE_VTK=ON -D WITH_XINE=ON -D WITH_CUDA=ON -D WITH_OPENGL=ON -D WITH_TBB=ON -D WITH_OPENCL=ON -D CMAKE_BUILD_TYPE=RELEASE -D CUDA_NVCC_FLAGS="-D_FORCE_INLINES --expt-relaxed-constexpr" -D WITH_GDAL=ON -D ENABLE_FAST_MATH=1 -D CUDA_FAST_MATH=1 -D WITH_CUBLAS=1 -D CXXFLAGS="-std=c++11" -DCMAKE_CXX_COMPILER=g++-6 -DCMAKE_C_COMPILER=gcc-6 ..
+#-D OPENCV_EXTRA_MODULES_PATH=../../opencv_contrib/modules/ 
 
 ###########################################
 #cmake -D WITH_CUDA=ON \
@@ -103,4 +104,3 @@ echo "Install OpenCV Build"
 make install
 bash -c 'echo "/usr/local/lib" > /etc/ld.so.conf.d/opencv.conf'
 ldconfig
-
